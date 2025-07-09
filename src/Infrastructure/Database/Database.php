@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace Infrastructure\Database;
 
 use PDO;
 
@@ -24,4 +24,5 @@ class Database
         ]);
 
         return $pdo;
-    }}
+    }
+}
