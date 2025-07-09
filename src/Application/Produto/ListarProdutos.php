@@ -12,8 +12,17 @@ class ListarProdutos
     {
     }
 
-    public function execute(): array
-    {
-        return $this->repository->findAll();
+    /**
+     * @return array{items: array, total: int}
+     */
+    public function execute(
+        int $page = 1,
+        int $perPage = 10,
+        ?string $term = null,
+        ?string $name = null,
+        ?float $minPrice = null,
+        ?float $maxPrice = null
+    ): array {
+        return $this->repository->search($page, $perPage, $term, $name, $minPrice, $maxPrice);
     }
 }
