@@ -5,6 +5,7 @@ namespace Application\Usuario;
 
 use Domain\Usuario\Usuario;
 use Domain\Usuario\UsuarioRepository;
+use Application\Usuario\UsuarioDTO;
 
 class CriarUsuario
 {
@@ -12,9 +13,10 @@ class CriarUsuario
     {
     }
 
-    public function execute(string $login, string $email, string $nome, string $senha): Usuario
+    public function execute(string $login, string $email, string $nome, string $senha): UsuarioDTO
     {
         $usuario = new Usuario(null, $login, $email, $nome, $senha);
-        return $this->repository->save($usuario);
+        $saved = $this->repository->save($usuario);
+        return UsuarioDTO::fromEntity($saved);
     }
 }

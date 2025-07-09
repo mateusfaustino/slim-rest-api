@@ -6,6 +6,7 @@ namespace Application\Produto;
 
 use Domain\Produto\Produto;
 use Domain\Produto\ProdutoRepository;
+use Application\Produto\ProdutoDTO;
 
 class AtualizarProduto
 {
@@ -13,7 +14,7 @@ class AtualizarProduto
     {
     }
 
-    public function execute(int $id, string $nome, float $preco): ?Produto
+    public function execute(int $id, string $nome, float $preco): ?ProdutoDTO
     {
         $produto = $this->repository->findById($id);
         if (!$produto) {
@@ -23,6 +24,6 @@ class AtualizarProduto
         $produto->setPreco($preco);
         $this->repository->update($produto);
 
-        return $produto;
+        return ProdutoDTO::fromEntity($produto);
     }
 }

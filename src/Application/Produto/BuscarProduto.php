@@ -6,6 +6,7 @@ namespace Application\Produto;
 
 use Domain\Produto\Produto;
 use Domain\Produto\ProdutoRepository;
+use Application\Produto\ProdutoDTO;
 
 class BuscarProduto
 {
@@ -13,8 +14,9 @@ class BuscarProduto
     {
     }
 
-    public function execute(int $id): ?Produto
+    public function execute(int $id): ?ProdutoDTO
     {
-        return $this->repository->findById($id);
+        $produto = $this->repository->findById($id);
+        return $produto ? ProdutoDTO::fromEntity($produto) : null;
     }
 }

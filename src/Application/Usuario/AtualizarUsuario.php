@@ -5,6 +5,7 @@ namespace Application\Usuario;
 
 use Domain\Usuario\Usuario;
 use Domain\Usuario\UsuarioRepository;
+use Application\Usuario\UsuarioDTO;
 
 class AtualizarUsuario
 {
@@ -12,7 +13,7 @@ class AtualizarUsuario
     {
     }
 
-    public function execute(int $id, string $login, string $email, string $nome, string $senha): ?Usuario
+    public function execute(int $id, string $login, string $email, string $nome, string $senha): ?UsuarioDTO
     {
         $usuario = $this->repository->findById($id);
         if (!$usuario) {
@@ -23,6 +24,6 @@ class AtualizarUsuario
         $usuario->setNome($nome);
         $usuario->setSenha($senha);
         $this->repository->update($usuario);
-        return $usuario;
+        return UsuarioDTO::fromEntity($usuario);
     }
 }

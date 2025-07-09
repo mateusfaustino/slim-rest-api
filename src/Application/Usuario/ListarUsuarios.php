@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Application\Usuario;
 
 use Domain\Usuario\UsuarioRepository;
+use Application\Usuario\UsuarioDTO;
 
 class ListarUsuarios
 {
@@ -11,8 +12,12 @@ class ListarUsuarios
     {
     }
 
+    /**
+     * @return UsuarioDTO[]
+     */
     public function execute(): array
     {
-        return $this->repository->findAll();
+        $usuarios = $this->repository->findAll();
+        return array_map(fn($u) => UsuarioDTO::fromEntity($u), $usuarios);
     }
 }
