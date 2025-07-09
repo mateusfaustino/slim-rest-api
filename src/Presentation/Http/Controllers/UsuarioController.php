@@ -33,6 +33,12 @@ class UsuarioController
     public function create(Request $request, Response $response): Response
     {
         $params = (array)$request->getParsedBody();
+        $validator = new \Application\Usuario\UsuarioValidator($params);
+        if (!$validator->validate()) {
+            $response->getBody()->write(json_encode(['errors' => $validator->errors()]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+
         $senha = password_hash($params['senha'], PASSWORD_BCRYPT);
         $usuario = $this->criarUsuario->execute($params['login'], $params['email'], $params['nome'], $senha);
         $response->getBody()->write(json_encode($usuario->toArray()));
@@ -55,6 +61,12 @@ class UsuarioController
     {
         $id = (int)$args['id'];
         $params = (array)$request->getParsedBody();
+        $validator = new \Application\Usuario\UsuarioValidator($params);
+        if (!$validator->validate()) {
+            $response->getBody()->write(json_encode(['errors' => $validator->errors()]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+
         $senha = password_hash($params['senha'], PASSWORD_BCRYPT);
         $usuario = $this->atualizarUsuario->execute($id, $params['login'], $params['email'], $params['nome'], $senha);
         if (!$usuario) {
