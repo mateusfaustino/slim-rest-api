@@ -13,7 +13,5 @@ class LoginValidator extends Validator
         parent::__construct($data);
 
         $this->rule('required', ['login', 'senha']);
-        $this->rule('lengthMin', 'login', 4);
-        $this->rule('lengthMin', 'senha', 8);
     }
 }
