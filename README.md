@@ -35,6 +35,7 @@ Após esses passos a API já estará pronta para uso em seu ambiente local.
 
 - `POST /api/auth/login` &mdash; retorna um token JWT. Utilize-o no cabeçalho `Authorization: Bearer <token>`
 - CRUD de produtos (`/api/produtos`) e de usuários (`/api/usuarios`) conforme definido em [`src/Presentation/Http/Routes.php`](src/Presentation/Http/Routes.php)
+- Documentação OpenAPI disponível em `/openapi`
 
 As rotas de criação, edição e exclusão exigem autenticação via JWT.
 

@@ -6,6 +6,7 @@ use Presentation\Http\Controllers\ProdutoController;
 use Presentation\Http\Controllers\UsuarioController;
 use Presentation\Http\Controllers\AuthController;
 use Presentation\Http\JwtMiddleware;
+use OpenApi\Generator;
 use Slim\App;
 
 return function (App $app): void {
@@ -28,4 +29,10 @@ return function (App $app): void {
     });
 
     $app->post('/api/auth/login', [AuthController::class, 'login']);
+
+    $app->get('/openapi', function ($request, $response) {
+        $openapi = Generator::scan([dirname(__DIR__, 2)]);
+        $response->getBody()->write($openapi->toJson());
+        return $response->withHeader('Content-Type', 'application/json');
+    });
 };
