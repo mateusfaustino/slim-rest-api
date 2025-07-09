@@ -14,7 +14,7 @@ return [
             'name' => 'nome_do_banco',
             'user' => 'root',
             'pass' => 'senha',
-            'port' => '3306',
+            'port' => '3309',
             'charset' => 'utf8mb4',
         ],
     ],
