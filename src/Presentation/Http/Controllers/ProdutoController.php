@@ -25,14 +25,29 @@ class ProdutoController
 
     public function index(Request $request, Response $response): Response
     {
-        $produtos = $this->listarProdutos->execute();
-        $data = array_map(fn($p) => [
+        $query = $request->getQueryParams();
+        $page = isset($query['page']) ? max(1, (int)$query['page']) : 1;
+        $perPage = isset($query['per_page']) ? max(1, (int)$query['per_page']) : 10;
+        $search = $query['search'] ?? null;
+        $name = $query['name'] ?? null;
+        $minPrice = isset($query['min_price']) ? (float)$query['min_price'] : null;
+        $maxPrice = isset($query['max_price']) ? (float)$query['max_price'] : null;
+
+        $result = $this->listarProdutos->execute($page, $perPage, $search, $name, $minPrice, $maxPrice);
+        $items = array_map(fn($p) => [
             'id' => $p->getId(),
             'nome' => $p->getNome(),
             'preco' => $p->getPreco(),
-        ], $produtos);
+        ], $result['items']);
 
-        $response->getBody()->write(json_encode($data));
+        $payload = [
+            'total' => $result['total'],
+            'page' => $page,
+            'per_page' => $perPage,
+            'items' => $items,
+        ];
+
+        $response->getBody()->write(json_encode($payload));
         return $response->withHeader('Content-Type', 'application/json');
     }
 
