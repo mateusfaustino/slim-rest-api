@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Presentation\Http\Controllers;
 
 use Application\Usuario\AutenticarUsuario;
+use Application\Usuario\LoginDTO;
+use Application\Usuario\LoginValidator;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -18,7 +20,15 @@ class AuthController
     public function login(Request $request, Response $response): Response
     {
         $params = (array)$request->getParsedBody();
-        $userId = $this->autenticarUsuario->execute($params['login'], $params['senha']);
+
+        $validator = new LoginValidator($params);
+        if (!$validator->validate()) {
+            $response->getBody()->write(json_encode(['errors' => $validator->errors()]));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
+        }
+
+        $loginDTO = LoginDTO::fromArray($params);
+        $userId = $this->autenticarUsuario->execute($loginDTO);
         if (!$userId) {
             $response->getBody()->write(json_encode(['message' => 'Credenciais inválidas']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(401);
