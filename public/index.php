@@ -1,22 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
+use DI\Container;
+use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
-// use Slim\Psr7\Request;
-// use Slim\Psr7\Response;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\RequestInterface as Request;
-use Slim\App;
+require dirname(__DIR__) . '/vendor/autoload.php';
 
-require dirname(__DIR__).'/vendor/autoload.php';
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
+$container = new Container();
+$dependencies = require dirname(__DIR__) . '/src/Infrastructure/Framework/Config/dependencies.php';
+$dependencies($container);
+
+AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-$app->get('/api/products', function(Request $request, Response $response){
-    $response->getBody()->write("Hello World!");
-
-    return $response;   
-});
+(require dirname(__DIR__) . '/src/Presentation/Http/Routes.php')($app);
 
 $app->run();
