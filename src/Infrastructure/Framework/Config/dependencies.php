@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use DI\Container;
-use App\Database;
+use Infrastructure\Database\Database;
 use Domain\Produto\ProdutoRepository;
 use Infrastructure\Persistence\PdoProdutoRepository;
 use PDO;
