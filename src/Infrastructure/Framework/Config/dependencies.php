@@ -6,6 +6,8 @@ use DI\Container;
 use Infrastructure\Database\Database;
 use Domain\Produto\ProdutoRepository;
 use Infrastructure\Persistence\PdoProdutoRepository;
+use Domain\Usuario\UsuarioRepository;
+use Infrastructure\Persistence\PdoUsuarioRepository;
 use PDO;
 
 return function (Container $container): void {
@@ -20,4 +22,5 @@ return function (Container $container): void {
     });
 
     $container->set(ProdutoRepository::class, DI\autowire(PdoProdutoRepository::class));
+    $container->set(UsuarioRepository::class, DI\autowire(PdoUsuarioRepository::class));
 };
