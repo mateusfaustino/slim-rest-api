@@ -21,7 +21,7 @@ return function (App $app): void {
 
     $app->group('/api/usuarios', function ($group) use ($jwt) {
         $group->get('', [UsuarioController::class, 'index'])->add($jwt);
-        $group->post('', [UsuarioController::class, 'create'])->add($jwt);
+        $group->post('', [UsuarioController::class, 'create']);
         $group->get('/{id}', [UsuarioController::class, 'show'])->add($jwt);
         $group->put('/{id}', [UsuarioController::class, 'update'])->add($jwt);
         $group->delete('/{id}', [UsuarioController::class, 'delete'])->add($jwt);

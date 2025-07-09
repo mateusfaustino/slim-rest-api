@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Application\\Usuario;
+namespace Application\Usuario;
 
-use Domain\\Usuario\\Usuario;
-use Domain\\Usuario\\UsuarioRepository;
+use Domain\Usuario\Usuario;
+use Domain\Usuario\UsuarioRepository;
 
 class CriarUsuario
 {

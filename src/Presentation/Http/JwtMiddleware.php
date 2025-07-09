@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Presentation\\Http;
+namespace Presentation\Http;
 
-use Firebase\\JWT\\JWT;
-use Firebase\\JWT\\Key;
-use Psr\\Http\\Message\\ResponseInterface as Response;
-use Psr\\Http\\Message\\ServerRequestInterface as Request;
-use Psr\\Http\\Server\\MiddlewareInterface;
-use Psr\\Http\\Server\\RequestHandlerInterface as RequestHandler;
-use Slim\\Psr7\\Response as SlimResponse;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Slim\Psr7\Response as SlimResponse;
 
 class JwtMiddleware implements MiddlewareInterface
 {

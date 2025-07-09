@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Infrastructure\\Persistence;
+namespace Infrastructure\Persistence;
 
-use Domain\\Usuario\\Usuario;
-use Domain\\Usuario\\UsuarioRepository;
+use Domain\Usuario\Usuario;
+use Domain\Usuario\UsuarioRepository;
 use PDO;
 
 class PdoUsuarioRepository implements UsuarioRepository

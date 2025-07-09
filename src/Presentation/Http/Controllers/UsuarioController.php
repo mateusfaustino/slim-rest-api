@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Presentation\\Http\\Controllers;
+namespace Presentation\Http\Controllers;
 
-use Application\\Usuario\\AtualizarUsuario;
-use Application\\Usuario\\BuscarUsuario;
-use Application\\Usuario\\CriarUsuario;
-use Application\\Usuario\\DeletarUsuario;
-use Application\\Usuario\\ListarUsuarios;
-use Psr\\Http\\Message\\ResponseInterface as Response;
-use Psr\\Http\\Message\\ServerRequestInterface as Request;
+use Application\Usuario\AtualizarUsuario;
+use Application\Usuario\BuscarUsuario;
+use Application\Usuario\CriarUsuario;
+use Application\Usuario\DeletarUsuario;
+use Application\Usuario\ListarUsuarios;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 class UsuarioController
 {
