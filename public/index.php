@@ -17,7 +17,7 @@ $dependencies($container);
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
-
+$app->addBodyParsingMiddleware();
 (require dirname(__DIR__) . '/src/Presentation/Http/Routes.php')($app);
 
 $app->run();
