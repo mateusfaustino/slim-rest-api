@@ -11,6 +11,9 @@ use Application\Usuario\ListarUsuarios;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+/**
+ * @OA\Tag(name="Usuarios")
+ */
 class UsuarioController
 {
     public function __construct(
@@ -22,6 +25,10 @@ class UsuarioController
     ) {
     }
 
+    /**
+     * @OA\Get(path="/api/usuarios", tags={"Usuarios"})
+     * @OA\Response(response=200, description="Lista de usuarios")
+     */
     public function index(Request $request, Response $response): Response
     {
         $usuarios = $this->listarUsuarios->execute();
@@ -30,6 +37,11 @@ class UsuarioController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * @OA\Post(path="/api/usuarios", tags={"Usuarios"})
+     * @OA\RequestBody(@OA\JsonContent(ref="#/components/schemas/Usuario"))
+     * @OA\Response(response=201, description="Usuario criado", @OA\JsonContent(ref="#/components/schemas/Usuario"))
+     */
     public function create(Request $request, Response $response): Response
     {
         $params = (array)$request->getParsedBody();
@@ -44,6 +56,12 @@ class UsuarioController
         $response->getBody()->write(json_encode($usuario->toArray()));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     }
+    /**
+     * @OA\Get(path="/api/usuarios/{id}", tags={"Usuarios"})
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer"))
+     * @OA\Response(response=200, description="Usuario")
+     * @OA\Response(response=404, description="Não encontrado")
+     */
 
     public function show(Request $request, Response $response, array $args): Response
     {
@@ -57,6 +75,13 @@ class UsuarioController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * @OA\Put(path="/api/usuarios/{id}", tags={"Usuarios"})
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer"))
+     * @OA\RequestBody(@OA\JsonContent(ref="#/components/schemas/Usuario"))
+     * @OA\Response(response=200, description="Usuario atualizado")
+     * @OA\Response(response=404, description="Não encontrado")
+     */
     public function update(Request $request, Response $response, array $args): Response
     {
         $id = (int)$args['id'];
@@ -77,6 +102,12 @@ class UsuarioController
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    /**
+     * @OA\Delete(path="/api/usuarios/{id}", tags={"Usuarios"})
+     * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer"))
+     * @OA\Response(response=204, description="Excluído")
+     * @OA\Response(response=404, description="Não encontrado")
+     */
     public function delete(Request $request, Response $response, array $args): Response
     {
         $id = (int)$args['id'];
