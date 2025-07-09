@@ -34,20 +34,7 @@ class ProdutoController
         $maxPrice = isset($query['max_price']) ? (float)$query['max_price'] : null;
 
         $result = $this->listarProdutos->execute($page, $perPage, $search, $name, $minPrice, $maxPrice);
-        $items = array_map(fn($p) => [
-            'id' => $p->getId(),
-            'nome' => $p->getNome(),
-            'preco' => $p->getPreco(),
-        ], $result['items']);
-
-        $payload = [
-            'total' => $result['total'],
-            'page' => $page,
-            'per_page' => $perPage,
-            'items' => $items,
-        ];
-
-        $response->getBody()->write(json_encode($payload));
+        $response->getBody()->write(json_encode($result->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
 
@@ -55,8 +42,7 @@ class ProdutoController
     {
         $params = (array)$request->getParsedBody();
         $produto = $this->criarProduto->execute($params['nome'], (float)$params['preco']);
-        $data = ['id' => $produto->getId(), 'nome' => $produto->getNome(), 'preco' => $produto->getPreco()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($produto->toArray()));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     }
 
@@ -68,8 +54,7 @@ class ProdutoController
             $response->getBody()->write(json_encode(['message' => 'Produto não encontrado']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }
-        $data = ['id' => $produto->getId(), 'nome' => $produto->getNome(), 'preco' => $produto->getPreco()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($produto->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
 
@@ -82,8 +67,7 @@ class ProdutoController
             $response->getBody()->write(json_encode(['message' => 'Produto não encontrado']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }
-        $data = ['id' => $produto->getId(), 'nome' => $produto->getNome(), 'preco' => $produto->getPreco()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($produto->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
 

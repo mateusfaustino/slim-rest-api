@@ -25,12 +25,7 @@ class UsuarioController
     public function index(Request $request, Response $response): Response
     {
         $usuarios = $this->listarUsuarios->execute();
-        $items = array_map(fn($u) => [
-            'id' => $u->getId(),
-            'login' => $u->getLogin(),
-            'email' => $u->getEmail(),
-            'nome' => $u->getNome(),
-        ], $usuarios);
+        $items = array_map(fn($u) => $u->toArray(), $usuarios);
         $response->getBody()->write(json_encode($items));
         return $response->withHeader('Content-Type', 'application/json');
     }
@@ -40,8 +35,7 @@ class UsuarioController
         $params = (array)$request->getParsedBody();
         $senha = password_hash($params['senha'], PASSWORD_BCRYPT);
         $usuario = $this->criarUsuario->execute($params['login'], $params['email'], $params['nome'], $senha);
-        $data = ['id' => $usuario->getId(), 'login' => $usuario->getLogin(), 'email' => $usuario->getEmail(), 'nome' => $usuario->getNome()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($usuario->toArray()));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
     }
 
@@ -53,8 +47,7 @@ class UsuarioController
             $response->getBody()->write(json_encode(['message' => 'Usuário não encontrado']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }
-        $data = ['id' => $usuario->getId(), 'login' => $usuario->getLogin(), 'email' => $usuario->getEmail(), 'nome' => $usuario->getNome()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($usuario->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
 
@@ -68,8 +61,7 @@ class UsuarioController
             $response->getBody()->write(json_encode(['message' => 'Usuário não encontrado']));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(404);
         }
-        $data = ['id' => $usuario->getId(), 'login' => $usuario->getLogin(), 'email' => $usuario->getEmail(), 'nome' => $usuario->getNome()];
-        $response->getBody()->write(json_encode($data));
+        $response->getBody()->write(json_encode($usuario->toArray()));
         return $response->withHeader('Content-Type', 'application/json');
     }
 

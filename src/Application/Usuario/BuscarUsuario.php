@@ -5,6 +5,7 @@ namespace Application\Usuario;
 
 use Domain\Usuario\UsuarioRepository;
 use Domain\Usuario\Usuario;
+use Application\Usuario\UsuarioDTO;
 
 class BuscarUsuario
 {
@@ -12,8 +13,9 @@ class BuscarUsuario
     {
     }
 
-    public function execute(int $id): ?Usuario
+    public function execute(int $id): ?UsuarioDTO
     {
-        return $this->repository->findById($id);
+        $usuario = $this->repository->findById($id);
+        return $usuario ? UsuarioDTO::fromEntity($usuario) : null;
     }
 }

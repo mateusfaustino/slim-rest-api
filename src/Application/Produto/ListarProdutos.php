@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application\Produto;
 
 use Domain\Produto\ProdutoRepository;
+use Application\Produto\ProdutoListDTO;
 
 class ListarProdutos
 {
@@ -12,9 +13,6 @@ class ListarProdutos
     {
     }
 
-    /**
-     * @return array{items: array, total: int}
-     */
     public function execute(
         int $page = 1,
         int $perPage = 10,
@@ -22,7 +20,8 @@ class ListarProdutos
         ?string $name = null,
         ?float $minPrice = null,
         ?float $maxPrice = null
-    ): array {
-        return $this->repository->search($page, $perPage, $term, $name, $minPrice, $maxPrice);
+    ): ProdutoListDTO {
+        $result = $this->repository->search($page, $perPage, $term, $name, $minPrice, $maxPrice);
+        return ProdutoListDTO::fromResult($result, $page, $perPage);
     }
 }
