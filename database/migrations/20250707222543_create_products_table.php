@@ -19,6 +19,15 @@ final class CreateProductsTable extends AbstractMigration
      */
     public function change(): void
     {
+        $table = $this->table('products');
 
+        $table->addColumn('nome', 'string', [
+                'limit' => 255,
+            ])
+            ->addColumn('preco', 'decimal', [
+                'precision' => 10,
+                'scale' => 2,
+            ])
+            ->create();
     }
 }
